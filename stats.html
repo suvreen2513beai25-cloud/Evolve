@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker - Statistics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-container">
+        <h2>📊 Habit Tracker</h2>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Dashboard</a>
+            <a href="habits.html" class="nav-link">Habits</a>
+            <a href="stats.html" class="nav-link active">Stats</a>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN -->
+<main class="stats-page">
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="page-header">
+            <h1>Your Statistics</h1>
+            <p>Detailed insights into your habit journey</p>
+        </div>
+
+        <!-- OVERALL COMPLETION -->
+        <div class="stats-overview">
+            <div class="stat-card large">
+                <div class="stat-icon">📊</div>
+                <div class="stat-number" id="overallCompletion">0%</div>
+                <div class="stat-label">Overall Completion</div>
+            </div>
+        </div>
+
+        <!-- STATS GRID -->
+        <div class="stats-grid">
+            
+            <!-- HABIT PERFORMANCE -->
+            <div class="stat-section">
+                <h3>Habit Performance</h3>
+                <div id="habitPerformance"></div>
+            </div>
+
+            <!-- BEST STREAK -->
+            <div class="stat-section">
+                <h3>Best Streak</h3>
+                <div id="bestStreak">0</div>
+            </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="export-section">
+            <button class="export-btn" onclick="exportData()">📤 Export Data</button>
+            <button class="reset-btn" onclick="resetAllData()">🗑️ Reset All Data</button>
+        </div>
+
+    </div>
+</main>
+
+<!-- SCRIPT -->
+<script src="script.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    loadData();
+    renderStats();
+});
+</script>
+
+</body>
+</html>
