@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome - Habit Tracker Auth</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; padding-bottom: 0;">
+
+  <main class="card" style="width: 100%; max-width: 400px; margin: 20px; border-radius: 24px;">
+    <div class="center" style="margin-bottom: 25px;">
+      <h2 style="font-size: 1.8rem; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        📊 Habit Tracker
+      </h2>
+      <p id="authSubtitle" style="color: #6b7280; font-size: 0.95rem; margin-top: 5px;">Create an account to start tracking</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label for="username" style="font-weight: 600; font-size: 0.85rem; color: #4b5563;">Username</label>
+        <input type="text" id="username" placeholder="Enter username..." style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; outline: none;" />
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <label for="password" style="font-weight: 600; font-size: 0.85rem; color: #4b5563;">Password</label>
+        <input type="password" id="password" placeholder="Enter password..." style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; outline: none;" />
+      </div>
+
+      <button id="authBtn" onclick="handleAuth()" class="btn primary" style="width: 100%; margin-top: 10px; padding: 12px;">
+        Sign Up
+      </button>
+    </div>
+
+    <div class="center" style="margin-top: 20px; font-size: 0.9rem; color: #4b5563;">
+      <span id="toggleText">Already have an account?</span> 
+      <a href="#" id="toggleLink" onclick="toggleAuthMode()" style="color: #4f46e5; font-weight: 600; text-decoration: none; margin-left: 5px;">Login</a>
+    </div>
+  </main>
+
+  <script>
+    // TRACKING USER REGISTRATION MODE State
+    let isSignUpMode = true;
+
+    function toggleAuthMode() {
+      isSignUpMode = !isSignUpMode;
+      const subtitle = document.getElementById("authSubtitle");
+      const btn = document.getElementById("authBtn");
+      const toggleText = document.getElementById("toggleText");
+      const toggleLink = document.getElementById("toggleLink");
+
+      if (isSignUpMode) {
+        subtitle.innerText = "Create an account to start tracking";
+        btn.innerText = "Sign Up";
+        toggleText.innerText = "Already have an account?";
+        toggleLink.innerText = "Login";
+      } else {
+        subtitle.innerText = "Log back into your account";
+        btn.innerText = "Login";
+        toggleText.innerText = "Don't have an account?";
+        toggleLink.innerText = "Sign Up";
+      }
+    }
+
+    function handleAuth() {
+      const userInp = document.getElementById("username").value.trim();
+      const passInp = document.getElementById("password").value.trim();
+
+      if (userInp === "" || passInp === "") {
+        alert("❌ Please fill out all login fields!");
+        return;
+      }
+
+      // Read registered users database safely from local registry storage
+      let systemUsers = JSON.parse(localStorage.getItem("trackerUsers")) || {};
+
+      if (isSignUpMode) {
+        // Sign-up process logic control checks
+        if (systemUsers[userInp]) {
+          alert("❌ Username already taken!");
+          return;
+        }
+        
+        // Save the new credential profiles maps payload object directly
+        systemUsers[userInp] = passInp;
+        localStorage.setItem("trackerUsers", JSON.stringify(systemUsers));
+        
+        // Set login session validation marker cookie key data string
+        localStorage.setItem("currentUser", userInp);
+        alert("🎉 Account created successfully!");
+        window.location.href = "index.html";
+      } else {
+        // Login process logical checking validations
+        if (systemUsers[userInp] && systemUsers[userInp] === passInp) {
+          localStorage.setItem("currentUser", userInp);
+          window.location.href = "index.html";
+        } else {
+          alert("❌ Invalid username or matching system password!");
+        }
+      }
+    }
+
+    // Auto-login protection intercept if credentials exist
+    if (localStorage.getItem("currentUser")) {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

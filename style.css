@@ -1,274 +1,435 @@
- /* RESET */
+/* ==========================================
+   ✨ GLOBAL THEME & RESET
+   ========================================== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* BODY */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    color: #1e293b;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Beautiful, deep modern gradient background */
+  background: linear-gradient(135deg, #0f172a, #1e1b4b, #311042);
+  min-height: 100vh;
+  color: #f8fafc;
+  padding-bottom: 60px;
+  cursor:default;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+  width: 90%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 0;
+}
+.logo h2, .welcome h1, #clock {
+  /* 1. Keeps your browser happy (Renders the actual visual trick) */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* 2. Keeps your code editor happy (Clears the error flag) */
+  background-clip: text;
 }
 
-/* NAVIGATION  */
-
+/* ==========================================
+   🧭 NAV BAR (Modern Glassmorphism Design)
+   ========================================== */
 .navbar {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 70px;
+  width: 90%;
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.nav-logo h2 {
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-   
-    -webkit-text-fill-color: transparent;
+.logo h2 {
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 .nav-links {
-    display: flex;
-    gap: 30px;
+  display: flex;
+  gap: 25px;
 }
 
-.nav-link {
-    text-decoration: none;
-    color: #64748b;
-    padding: 10px 20px;
-    border-radius: 25px;
-    transition: 0.3s;
+.nav-links a {
+  text-decoration: none;
+  color: #94a3b8;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 6px 0;
+  position: relative;
 }
 
-.nav-link.active,
-.nav-link:hover {
-    color: #4facfe;
-    background: rgba(79, 172, 254, 0.1);
+.nav-links a:hover {
+  color: #38bdf8;
 }
 
-/*  DASHBOARD */
-
-.dashboard {
-    padding: 40px 0;
+.nav-links a.active {
+  color: #38bdf8 !important;
 }
 
-.welcome-section {
-    text-align: center;
-    margin-bottom: 50px;
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  border-radius: 2px;
 }
 
-.welcome-section h1 {
-    font-size: 3em;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    
-    -webkit-text-fill-color: transparent;
+/* ==========================================
+   👋 WELCOME HEADER
+   ========================================== */
+.welcome {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-/* Stats Cards */
+.welcome h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #ffffff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
+.welcome p {
+  margin-top: 10px;
+  color: #94a3b8;
+  font-size: 1.1rem;
+}
+
+/* ==========================================
+   📦 CARDS & GRIDS (No More Overlapping!)
+   ========================================== */
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-    margin-bottom: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
-.stat-card {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    transition: 0.3s;
+.habits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
 }
 
-.stat-card:hover {
-    transform: translateY(-10px);
+.card, .habit-card {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+  padding: 26px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.stat-icon {
-    font-size: 2.5em;
+.card:hover, .habit-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 20px 40px rgba(56, 189, 248, 0.1);
 }
 
-.stat-number {
-    font-size: 2em;
-    font-weight: bold;
+.card h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  margin-bottom: 8px;
 }
 
-.stat-label {
-    color: #64748b;
+.card h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #38bdf8;
 }
 
-/* Buttons */
-
-.quick-actions {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+.center {
+  text-align: center;
 }
 
-.action-btn {
-    padding: 15px 30px;
-    border-radius: 15px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
+/* ==========================================
+   ➕ INPUT BOX (Clean & Properly Spaced)
+   ========================================== */
+.add-box {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 35px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.add-box input {
+  flex: 1;
+  padding: 16px 20px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  background: #0f172a;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.add-box input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+}
+
+/* ==========================================
+   🔘 BUTTONS STYLE (Changes cursor to pointer!)
+   ========================================== */
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 35px;
+}
+
+.btn {
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  cursor: pointer; /* Changes standard line pointer back to interactive click hand pointer! */
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .primary {
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    color: white;
+  background: linear-gradient(135deg, #38bdf8, #4f46e5);
+  color: white;
+}
+
+.primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
 }
 
 .secondary {
-    background: white;
-    border: 2px solid #ddd;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.action-btn:hover {
-    transform: translateY(-3px);
+.secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
-/* HABITS PAGE  */
-
-.habits-page {
-    padding: 40px 0;
+.danger {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  color: white;
 }
 
-.page-header {
-    text-align: center;
-    margin-bottom: 40px;
-    color: white;
+.danger:hover {
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
 }
 
-.add-habit {
-    display: flex;
+.disabled-btn {
+  background: #334155 !important;
+  color: #64748b !important;
+  cursor: not-allowed !important;
+}
+
+/* ==========================================
+   📅 TODAY ITEM ROWS & PROGRESS BARS
+   ========================================== */
+.today-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 1.1rem;
+}
+
+.today-item:last-child {
+  border-bottom: none;
+}
+
+.bar {
+  background: #334155;
+  height: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #38bdf8);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+/* ==========================================
+   📱 MOBILE RESPONSIVENESS
+   ========================================== */
+@media(max-width:768px) {
+  .nav-container {
+    flex-direction: column;
     gap: 15px;
-    max-width: 600px;
-    margin: auto;
-}
+  }
 
-.add-habit input {
-    flex: 1;
-    padding: 15px;
-    border-radius: 10px;
+  .add-box {
+    flex-direction: column;
+    background: transparent;
+    padding: 0;
     border: none;
+  }
+
+  .add-box input, .add-box button {
+    width: 100%;
+  }
+
+  .welcome h1 {
+    font-size: 2rem;
+  }
+} 
+/* Update this specific block in style.css */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 30px;
 }
 
-.add-btn {
-    background: #10b981;
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    border-radius: 10px;
-    cursor: pointer;
+.utilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 30px;
 }
 
-.add-btn:hover {
-    background: #059669;
+/* Ensure cards handle text overflows gracefully */
+.card, .habit-card {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+  padding: 24px;
+  border-radius: 20px;
+  min-height: 140px; /* Forces a minimum structural space */
+  height: auto;       /* Allows cards to grow if text size expands */
+  overflow: hidden;   /* Keeps content inside the bounds */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+} 
+/* Update this specific block in style.css */
+.browser-card p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  word-break: break-all;      /* Forces long strings of text to wrap cleanly onto a new line */
+  white-space: normal;        /* Prevents text from staying on a single continuous horizontal line */
+  line-height: 1.5;
+}
+/* ==========================================
+   📊 FIXED DASHBOARD METRICS ALIGNMENT
+   ========================================== */
+
+/* This updates all stat cards to be perfectly centered and balanced */
+.stats-grid .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* Centers items horizontally */
+  justify-content: center;   /* Centers items vertically */
+  text-align: center;        /* Aligns text labels directly in the middle */
+  padding: 24px;
+  min-height: 150px;         /* Gives an even height to all boxes so they match */
+  width: 100%;               /* Forces boxes to fill up the grid row evenly */
 }
 
-/* Habit Cards */
+/* Ensure the sub-headings inside the metrics boxes are properly placed */
+.stats-grid .card h3 {
+  margin-bottom: 8px;
+  width: 100%;
+}
 
-.habits-grid {
-    margin-top: 30px;
+/* Ensures the big tracking numbers don't bunch up against the card borders */
+.stats-grid .card h1 {
+  margin: 0;
+  width: 100%;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+/* ==========================================
+   🧩 FIX FOR DASHBOARD CARD CLASHES
+   ========================================== */
+
+/* 1. Force the main container to organize sections vertically without crowding */
+main.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Gives healthy spacing between rows */
+}
+
+/* 2. Group the Today's Habits, Clock, and Motivation into a beautiful 3-column layout */
+@media (min-width: 769px) {
+  /* This targets your index.html setup to layout items horizontally on computers */
+  main.container {
     display: grid;
-    gap: 20px;
-}
-
-.habit-card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-}
-
-.habit-header {
-    display: flex;
-    justify-content: space-between;
-}
-
-.delete-btn {
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-}
-
-/*  EMPTY  */
-
-.empty-state {
-    text-align: center;
-    padding: 40px;
-    color: white;
-}
-
-/*  STATS PAGE*/
-
-.stats-page {
-    padding: 40px 0;
-}
-
-/* FIXED: avoid conflict with dashboard */
-.stats-page .stats-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 30px;
+  }
+
+  /* Creates a dedicated layout row just for your dynamic card tools */
+  .utilities-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Splitting clock and motivation 50/50 */
+    gap: 25px;
+  }
 }
 
-.stat-section {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
+/* 3. Give the "Today's Habits" card internal safety spacing */
+#todayHabits {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.performance-bar {
-    height: 8px;
-    background: linear-gradient(90deg, #10b981, #4facfe);
-    border-radius: 5px;
+/* 4. Fix typography inside Clock & Quotes so they never spill outside the box */
+#clock {
+  font-size: 3rem !important;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  background: linear-gradient(90deg, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/*  EXPORT BUTTONS (FIXED) */
-
-.export-btn, .reset-btn {
-    padding: 15px 40px;
-    font-size: 1.1em;
-    font-weight: 600;
-    border-radius: 15px;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
-    transition: 0.3s;
-}
-
-.export-btn {
-    background: #4facfe;
-    color: white;
-}
-
-.reset-btn {
-    background: #ef4444;
-    color: white;
-}
-
-.export-btn:hover,
-.reset-btn:hover {
-    transform: translateY(-2px);
+.quote-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  padding: 10px 15px;
+  font-style: italic;
 }

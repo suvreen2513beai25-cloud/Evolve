@@ -1,226 +1,65 @@
-// Load data
-let habits = JSON.parse(localStorage.getItem("habits")) || [];
+// GLOBAL HABITS DATA ARRAY
+let habits = [];
 
-// Save data
-const saveData = () => {
-  localStorage.setItem("habits", JSON.stringify(habits));
-};
+// Saves habits specifically to the logged-in username
+function saveData() {
+  const currentUser = localStorage.getItem("currentUser") || "global";
+  localStorage.setItem(currentUser + "_habits", JSON.stringify(habits));
+}
 
-// Load data (used in pages)
-const loadData = () => {
-  habits = JSON.parse(localStorage.getItem("habits")) || [];
-};
+// Loads habits specifically belonging to the logged-in username
+function loadData() {
+  const currentUser = localStorage.getItem("currentUser") || "global";
+  habits = JSON.parse(localStorage.getItem(currentUser + "_habits")) || [];
+}
 
-// Add habit
-const addHabit = () => {
-  const input = document.getElementById("habitInput");
-
-  if (!input.value.trim()) {
-    alert("Enter a habit");
-    return;
-  }
-
-  habits.push({
-    name: input.value,
-    streak: 0,
-    history: []
-  });
-
-  input.value = "";
-
-  saveData();
-  renderHabits();
-};
-
-// Render habits (habits.html)
-const renderHabits = () => {
-  const grid = document.getElementById("habitsGrid");
-  if (!grid) return;
-
-  grid.innerHTML = "";
-
-  if (habits.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state">
-        <h3>No habits yet</h3>
-        <p>Add your first habit to start tracking!</p>
-      </div>
-    `;
-    return;
-  }
-
-  habits.forEach((habit, index) => {
-    const card = document.createElement("div");
-    card.className = "habit-card";
-
-    card.innerHTML = `
-      <div class="habit-header">
-        <div class="habit-name">${habit.name}</div>
-        <button class="delete-btn" onclick="deleteHabit(${index})">×</button>
-      </div>
-
-      <div class="streak-info">
-        <div class="streak">🔥 ${habit.streak} days</div>
-      </div>
-
-      <button onclick="markDone(${index})" class="add-btn">Mark Done</button>
-    `;
-
-    grid.appendChild(card);
-  });
-};
-
-// Mark habit done
-const markDone = (index) => {
-  const today = new Date().toLocaleDateString();
-
-  if (!habits[index].history.includes(today)) {
-    habits[index].history.push(today);
-    habits[index].streak += 1;
-  }
-
-  saveData();
-  renderHabits();
-  updateDashboardStats();
-};
-
-// Delete habit
-const deleteHabit = (index) => {
-  habits.splice(index, 1);
-  saveData();
-  renderHabits();
-};
-
-// Dashboard stats
-const updateDashboardStats = () => {
-  const total = habits.length;
-  const bestStreak = Math.max(...habits.map(h => h.streak), 0);
-
-  const totalDays = habits.reduce((sum, h) => sum + h.history.length, 0);
-
-  const completionRate =
-    total === 0 ? 0 : Math.round((totalDays / (total * 7)) * 100);
-
-  if (document.getElementById("totalHabits"))
-    document.getElementById("totalHabits").innerText = total;
-
-  if (document.getElementById("bestStreak"))
-    document.getElementById("bestStreak").innerText = bestStreak;
-
-  if (document.getElementById("totalDays"))
-    document.getElementById("totalDays").innerText = totalDays;
-
-  if (document.getElementById("completionRate"))
-    document.getElementById("completionRate").innerText =
-      completionRate + "%";
-};
-document.addEventListener("DOMContentLoaded", function () {
-    loadData();
-    updateDashboardStats();
-    showTodayHabits();
-});
-// Show today's habits (dashboard)
-const showTodayHabits = () => {
-  const container = document.getElementById("todayHabits");
-  if (!container) return;
-
-  const today = new Date().toLocaleDateString();
-
-  container.innerHTML = "";
-
-  habits.forEach(habit => {
-    const done = habit.history.includes(today);
-
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <p>
-        ${done ? "✅" : "⬜"} ${habit.name}
-      </p>
-    `;
-
-    container.appendChild(div);
-  });
-};
-
-
-
-
-//new
-const renderStats = () => {
-  const performanceDiv = document.getElementById("habitPerformance");
-  const overallDiv = document.getElementById("overallCompletion");
-
-  if (!performanceDiv || !overallDiv) return;
-
-  performanceDiv.innerHTML = "";
-
-  if (habits.length === 0) {
-    performanceDiv.innerHTML = "<p>No data available</p>";
-    overallDiv.innerText = "0%";
-    return;
-  }
-
-  let totalDays = 0;
-
-  habits.forEach(habit => {
-    totalDays += habit.history.length;
-
-    const percent = Math.min(
-      Math.round((habit.history.length / 7) * 100),
-      100
-    );
-
-    const div = document.createElement("div");
-    div.className = "habit-performance-item";
-
-    div.innerHTML = `
-      <div>
-        <strong>${habit.name}</strong>
-        <div class="performance-bar" style="width:${percent}%"></div>
-      </div>
-      <div>${percent}%</div>
-    `;
-
-    performanceDiv.appendChild(div);
-  });
-
-  const overall = Math.round(
-    (totalDays / (habits.length * 7)) * 100
-  );
-
-  overallDiv.innerText = overall + "%";
-};
-
-
-
-//export data
+// EXPORT DATA TO JSON FILE
 function exportData() {
   if (habits.length === 0) {
-    alert("No data to export");
+    alert("No data available to export.");
     return;
   }
 
-  const dataStr = JSON.stringify(habits, null, 2);
-  const blob = new Blob([dataStr], { type: "application/json" });
-
+  const data = JSON.stringify(habits, null, 2);
+  const blob = new Blob([data], { type: "application/json" });
   const url = URL.createObjectURL(blob);
-
   const a = document.createElement("a");
+
   a.href = url;
-  a.download = "habits-data.json";
-
-  document.body.appendChild(a); // ✅ IMPORTANT
+  a.download = "habit-tracker-backup.json";
+  document.body.appendChild(a);
   a.click();
-  document.body.removeChild(a); // cleanup
-
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
 
-//reset data
+// RESET ALL USER DATA ACCORDING TO SESSION LOGIN
 function resetAllData() {
-  if (confirm("Are you sure you want to delete all data?")) {
-    localStorage.removeItem("habits");
+  const check = confirm("⚠️ Are you absolutely sure you want to delete all habits and data permanently?");
+  if (check) {
+    const currentUser = localStorage.getItem("currentUser") || "global";
+    localStorage.removeItem(currentUser + "_habits");
     habits = [];
-    location.reload();
+    window.location.reload();
   }
+}
+
+// Automatically execute global parsing structures
+loadData();
+
+// Set a personalized username banner on app layouts
+document.addEventListener("DOMContentLoaded", function() {
+  const activeUser = localStorage.getItem("currentUser");
+  const banner = document.getElementById("userGreeting");
+  if (activeUser && banner) {
+    // Shorten if email address layout string is too massive
+    const cleanName = activeUser.includes("@") ? activeUser.split("@")[0] : activeUser;
+    banner.innerText = `👤 Hello, ${cleanName}`;
+  }
+});
+
+// Clear runtime memory values and return back safely
+function logoutUser() {
+  localStorage.removeItem("currentUser");
+  window.location.href = "auth.html";
 }

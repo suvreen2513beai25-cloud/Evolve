@@ -1,76 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habit Tracker - Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - Habit Tracker</title>
+  <link rel="stylesheet" href="../style.css"/>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>📊 Habit Tracker</h2>
-            </div>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link active">Dashboard</a>
-                <a href="habits.html" class="nav-link">Habits</a>
-                <a href="stats.html" class="nav-link">Stats</a>
-            </div>
-        </div>
-    </nav>
 
-    <main class="dashboard">
-        <div class="container">
-            <div class="welcome-section">
-                <h1>Welcome back!</h1>
-                <p>Keep building those habits 🚀</p>
-            </div>
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <h2>📊 Habit Tracker</h2>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="active">Dashboard</a>
+      <a href="habits.html">Habits</a>
+      <a href="stats.html">Stats</a>
+      <span id="userGreeting" style="color: #94a3b8; font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; margin-right: 5px;">👤 User</span>
+      <a href="#" onclick="logoutUser()" style="color: #ef4444 !important; margin-left: 10px;">Logout</a>
+    </div>
+  </div>
+</nav>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">📈</div>
-                    <div class="stat-number" id="totalHabits">0</div>
-                    <div class="stat-label">Total Habits</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🔥</div>
-                    <div class="stat-number" id="bestStreak">0</div>
-                    <div class="stat-label">Best Streak</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">📅</div>
-                    <div class="stat-number" id="totalDays">0</div>
-                    <div class="stat-label">Days Tracked</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-number" id="completionRate">0%</div>
-                    <div class="stat-label">Completion Rate</div>
-                </div>
-            </div>
+<main class="container">
+  <section class="welcome">
+    <h1>Welcome Back 👋</h1>
+    <p>Track your daily growth and stay productive.</p>
+  </section>
 
-            <div class="quick-actions">
-                <a href="habits.html" class="action-btn primary">Manage Habits</a>
-                <a href="stats.html" class="action-btn secondary">View Detailed Stats</a>
-            </div>
+  <section class="stats-grid">
+    <div class="card">
+      <h3>Total Habits</h3>
+      <h1 id="totalHabits">0</h1>
+    </div>
+    <div class="card">
+      <h3>Best Streak</h3>
+      <h1 id="bestStreak">0</h1>
+    </div>
+    <div class="card">
+      <h3>Total Days Done</h3>
+      <h1 id="totalDays">0</h1>
+    </div>
+    <div class="card">
+      <h3>Completion</h3>
+      <div class="progress-ring-container" style="position: relative; width: 80px; height: 80px; margin: 10px 0;">
+        <div style="position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 8px solid rgba(255,255,255,0.1);"></div>
+        <div id="visualRing" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 8px solid transparent; border-top-color: #38bdf8; border-right-color: #38bdf8; transform: rotate(0deg); transition: transform 0.5s ease;"></div>
+      </div>
+      <h1 id="completionRate">0%</h1>
+    </div>
+  </section>
 
-            <div class="recent-habits">
-                <h3>Today's Habits</h3>
-                <div id="todayHabits"></div>
-            </div>
-        </div>
-    </main>
+  <section class="card">
+    <h2>📅 Today's Habits</h2>
+    <div id="todayHabits"></div>
+  </section>
 
-    <script src="script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            loadData();
-            updateDashboardStats();
-            showTodayHabits();
-        });
-        <button onclick="exportData()">📤 Export Data</button>
-        
-    </script>
+  <div class="utilities-grid">
+    <section class="card">
+      <h2>⏰ Live Clock</h2>
+      <h1 id="clock"></h1>
+    </section>
+
+    <section class="card">
+      <h2>💡 Daily Motivation</h2>
+      <p id="quote" class="quote-text">Loading inspiration...</p>
+    </section>
+  </div>
+
+  <section class="card browser-card">
+    <h2>🌐 System Browser Info</h2>
+    <p id="browser"></p>
+  </section>
+
+  <section class="buttons">
+    <a href="habits.html" class="btn primary">Manage Habits</a>
+    <a href="stats.html" class="btn secondary">View Stats</a>
+  </section>
+</main>
+
+<script src="../script.js"></script>
+<script src="../dashboard.js"></script>
 </body>
 </html>
