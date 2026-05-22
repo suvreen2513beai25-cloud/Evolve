@@ -10,7 +10,13 @@ function saveData() {
 // Loads habits specifically belonging to the logged-in username
 function loadData() {
   const currentUser = localStorage.getItem("currentUser") || "global";
-  habits = JSON.parse(localStorage.getItem(currentUser + "_habits")) || [];
+  try {
+    const stored = localStorage.getItem(currentUser + "_habits");
+    habits = stored ? JSON.parse(stored) : [];
+  } catch (e) {
+    habits = [];
+  }
+  if (!Array.isArray(habits)) habits = [];
 }
 
 // EXPORT DATA TO JSON FILE

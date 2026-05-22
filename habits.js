@@ -101,7 +101,10 @@ if (input) {
 }
 
 // INITIAL SCREEN DISPATCH
-renderHabits();
+document.addEventListener("DOMContentLoaded", function() {
+  loadData();
+  renderHabits();
+});
 // 1. IMPROVED ADD HABIT FUNCTION WITH VALIDATION
 function addHabit() {
   const text = input.value.trim();

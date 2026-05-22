@@ -44,8 +44,13 @@ function updateDashboardStats() {
 
   const ringElement = document.getElementById("visualRing");
   if (ringElement) {
-    const rotationDegrees = (completion / 100) * 360;
-    ringElement.style.transform = `rotate(${rotationDegrees}deg)`;
+    const pct = Math.min(Math.max(completion, 0), 100);
+    const degrees = pct * 3.6;
+    ringElement.style.border = "none";
+    ringElement.style.transform = "none";
+    ringElement.style.background = `conic-gradient(from -90deg, #38bdf8 0deg, #38bdf8 ${degrees}deg, rgba(255,255,255,0.1) ${degrees}deg)`;
+    ringElement.style.webkitMask = "radial-gradient(farthest-side, transparent calc(100% - 14px), #000 calc(100% - 8px))";
+    ringElement.style.mask = "radial-gradient(farthest-side, transparent calc(100% - 14px), #000 calc(100% - 8px))";
   }
 }
 
@@ -108,13 +113,18 @@ function displayBrowserInfo() {
 // ==========================================
 // 🚀 RUN ENGINE EXECUTIONS
 // ==========================================
-try {
-  updateClock();
-  setInterval(updateClock, 1000);
-  loadQuote();
-  displayBrowserInfo();
-  updateDashboardStats();
-  showTodayHabits();
-} catch (error) {
-  console.error("Dashboard engine fail warning: ", error);
-}
+document.addEventListener("DOMContentLoaded", function() {
+  if (typeof loadData === "function") {
+    loadData();
+  }
+  try {
+    updateClock();
+    setInterval(updateClock, 1000);
+    loadQuote();
+    displayBrowserInfo();
+    updateDashboardStats();
+    showTodayHabits();
+  } catch (error) {
+    console.error("Dashboard engine fail warning: ", error);
+  }
+});

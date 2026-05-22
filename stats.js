@@ -1,5 +1,3 @@
-loadData();
-
 function renderStats() {
   const performance = document.getElementById("habitPerformance");
   const overall = document.getElementById("overallCompletion");
@@ -42,4 +40,7 @@ function renderStats() {
 }
 
 // INITIALIZE METRICS LAYOUT VIEW
-renderStats();
+document.addEventListener("DOMContentLoaded", function() {
+  loadData();
+  renderStats();
+});
